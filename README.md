@@ -15,7 +15,7 @@ There is no search engine on Qishi website: https://www.qishicpc.com. Every time
 
 ## Qishi spider
 I have spent most time on this part. In oirder to scrap links from Qishi website, it requires to understand the html source scripts of the website. On the mainpage, 
-![Qishi page source code](doc/qishicpc_page_source.jpeg?raw=true "Qishi page source code")
+![Qishi page source code](docs/qishicpc_page_source.jpeg?raw=true "Qishi page source code")
 
 ## Data storage
 
