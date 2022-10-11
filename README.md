@@ -20,15 +20,27 @@ I have spent most time on this part. In oirder to scrap links from Qishi website
 For the subpage such as Qishi activities, we can find the activities in the following pattern.<br />
 ![item](/docs/item.jpg?raw=true "Item")
 
-
-The activities are listed in multiple pages, so we need to continue searching whether there is more page to scrap. <br />
+The activities are listed in multiple pages, so we need to continue searching whether there is more page to scrap by finding the pattern at the end of the page. <br />
 ![infinite page](/docs/infinite_page.jpg?raw=true "Infinite page")
 
+To grab the elements of items and new pages, we use css selector here.
+
+The spider is in search_engine/spider/qishi_spider.py. The data saved are title, url and html content.
+
 ## Data storage
+MongDB is used for storing the data. In order to run qishi_spider.py, we need to start the local MongDB service. Instalation and usage of MongDB in Mac OS can be found at https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/.
 
 
-## Backend server
+## Search server
+I mainly used the scripts from the course for this part and the the client interface, with some customized changes. The idea is to indexing the title and do cosine similarity to rank the doc seaching results.
 
 
 ## Client interface
+Run python app.py, it will start the server. The local url for the search engine is : http://0.0.0.0:8001. You can see the user interface as below:<br />
+![qishi search page](/docs/qishi_search.jpg?raw=true "qishi search")
+
+For example, searching for "advanced python program":
+![qishi search results](/docs/qishi_search_results.jpg?raw=true "qishi search results")
+
+
 
