@@ -1,2 +1,5 @@
 # Ignore Mac system files
 .DS_store
+
+# Ignore the egg info
+search_engine.egg-info
