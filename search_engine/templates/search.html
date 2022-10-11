@@ -1,0 +1,37 @@
+{% extends "main.html" %} {% block header %}
+<title>{{ title }} - Search Results</title>
+<link rel="stylesheet" href="/statics/css/index.css" />
+{% endblock %} {% block content %}
+<header style="height: 60px;">
+  <div class="navbar-container">
+    <form action="/search">
+      <a href="/" class="navbar-logo" style="color: rgb(95, 95, 95);">Qishi Search</a>
+      <div style="padding-top: 12px;">
+        <input
+          class="mdui-center mdui-textfield-input"
+          name="q"
+          value="{{ title }}"
+          style="width: 50%"
+        />
+      </div>
+    </form>
+  </div>
+</header>
+
+<div class="result-stats">
+  Total {{stats.count}} results
+  <nobr> ({{stats.time}} seconds)&nbsp;</nobr>
+</div>
+
+<section>
+  <div class="mdui-container">
+    {% for item in result %}
+    <div class="result-item mdui-center mdui-shadow-2">
+      <div class="item-title">
+        <a href="{{ item.url }}" target="_blank">{{ item.title }}</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
