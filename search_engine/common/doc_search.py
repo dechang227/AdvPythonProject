@@ -3,6 +3,10 @@ import sys
 
 import pymongo
 
+
+from operator import itemgetter
+
+from search_engine.common.cosine_similarity import CosineSimilarity
 from search_engine.common.common_tools import gen_stop_words, text_seg
 from search_engine.database.motor_base import MotorBase
 from search_engine.utils.log import logger
@@ -61,7 +65,20 @@ async def doc_search(*, query: str, mongo_db=None) -> list:
             {"_id": 0}
         )
 
+        # async for doc in doc_cursor:
+        #     result.append(doc)
+
+        # query_list = text_seg(query)
         async for doc in doc_cursor:
+            # 对输出的结果计算余弦相似度
+            doc_data = {
+                'index': doc['title'],
+                'value': text_seg(doc['title'].lower())
+            }
+            cos = CosineSimilarity(seg_query, doc_data)
+            vector = cos.create_vector()
+            cs_res = cos.calculate(vector)
+            doc['cs_value'] = cs_res['value']
             result.append(doc)
 
     except pymongo.errors.OperationFailure as e:
@@ -70,10 +87,19 @@ async def doc_search(*, query: str, mongo_db=None) -> list:
     except Exception as e:
         logger.error(e)
 
-    return result
+    # return result
+
+    result_sorted = sorted(
+        [x for x in result if x['cs_value']>=0.15],
+        reverse=True,
+        key=itemgetter('cs_value'))
+
+    return result_sorted
+
 
 
 if __name__ == '__main__':
-    res = asyncio.get_event_loop().run_until_complete(doc_search(query='Python'))
+    res = asyncio.get_event_loop().run_until_complete(doc_search(query='Advanced Python Programming'))
     for each in res:
         print(each['title'])
+        print(each['cs_value'])
