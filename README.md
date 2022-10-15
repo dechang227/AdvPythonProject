@@ -33,7 +33,7 @@ MongDB is used for storing the data. In order to run qishi_spider.py, we need to
 
 ## Search server
 I mainly used the scripts from the course for this part and the the client interface, with some customized changes. The idea is to indexing the title and do cosine similarity to rank the doc seaching results.
-
+Run python commom/doc_tools.py to generate tables with indexing
 
 ## Client interface
 Run python app.py, it will start the server. The local url for the search engine is : http://0.0.0.0:8001. You can see the user interface as below:<br />
